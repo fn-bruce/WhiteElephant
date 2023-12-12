@@ -1,10 +1,14 @@
+using WhiteElephant.Application;
+using WhiteElephant.Blazor;
 using WhiteElephant.Blazor.Components;
+using WhiteElephant.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
+builder.Services.AddWebServices();
 
 var app = builder.Build();
 
