@@ -6,4 +6,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\WhiteElephant.Application\WhiteElephant.Application.csproj" />
+      <ProjectReference Include="..\WhiteElephant.Infrastructure\WhiteElephant.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>

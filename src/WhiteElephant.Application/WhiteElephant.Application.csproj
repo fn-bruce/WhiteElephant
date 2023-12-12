@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\WhiteElephant.Domain\WhiteElephant.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
