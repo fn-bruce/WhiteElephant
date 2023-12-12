@@ -11,6 +11,11 @@ public class PersonRepository : IPersonRepository
         return Task.FromResult(_people);
     }
 
+    public Task<Person?> GetByIdAsync(Guid id)
+    {
+        return Task.FromResult(_people.FirstOrDefault(x => x.Id == id));
+    }
+
     public Task AddAsync(Person person)
     {
         _people.Add(person);
@@ -18,9 +23,14 @@ public class PersonRepository : IPersonRepository
         return Task.CompletedTask;
     }
 
-    public Task RemoveAsync(Person person)
+    public Task RemoveAsync(Guid id)
     {
-        _people.Remove(person);
+        var personToRemove = _people.FirstOrDefault(x => x.Id == id);
+        
+        if (personToRemove is not null)
+        {
+            _people.Remove(personToRemove);
+        }
         
         return Task.CompletedTask;
     }
