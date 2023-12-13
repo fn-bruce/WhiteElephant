@@ -1,6 +1,6 @@
 ﻿@page "/"
-@using WhiteElephant.Application.Persons.DTOs
 @using Blazored.LocalStorage
+@using WhiteElephant.Blazor.Models
 @inject ILocalStorageService LocalStorage
 
 @rendermode InteractiveServer
@@ -61,9 +61,9 @@ else
 
 @code {
 
-    private List<PersonDto> _persons = [];
-    private List<PersonDto> _personsRandomized = [];
-    private PersonDto? _currentPerson;
+    private List<Person> _persons = [];
+    private List<Person> _personsRandomized = [];
+    private Person? _currentPerson;
     private bool _started = false;
     
     public string Name { get; set; } = string.Empty;
@@ -77,10 +77,10 @@ else
         
         if (!await LocalStorage.ContainKeyAsync("persons"))
         {
-            await LocalStorage.SetItemAsync("persons", new List<PersonDto>());
+            await LocalStorage.SetItemAsync("persons", new List<Person>());
         }
 
-        _persons = await LocalStorage.GetItemAsync<List<PersonDto>>("persons");
+        _persons = await LocalStorage.GetItemAsync<List<Person>>("persons");
         
         StateHasChanged();
 
@@ -91,7 +91,7 @@ else
     {
         if (arg.Key == "Enter")
         {
-            var personToAdd = new PersonDto(Guid.NewGuid(), Name);
+            var personToAdd = new Person(Guid.NewGuid(), Name);
             
             _persons.Add(personToAdd);
             

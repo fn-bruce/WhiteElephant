@@ -4,13 +4,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6978CC60-2DB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DC6189FD-6ADA-46B7-A39B-33D41A21CF8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteElephant.Domain", "src\WhiteElephant.Domain\WhiteElephant.Domain.csproj", "{5CE717BE-99A9-47FC-853E-74193975AE07}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteElephant.Infrastructure", "src\WhiteElephant.Infrastructure\WhiteElephant.Infrastructure.csproj", "{446ABFFE-4097-4860-9F46-4CC54237CF76}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteElephant.Blazor", "src\WhiteElephant.Blazor\WhiteElephant.Blazor.csproj", "{2E1A29F5-1A15-4EC9-AD2E-5673A29746F7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteElephant.Application", "src\WhiteElephant.Application\WhiteElephant.Application.csproj", "{EC551857-9769-4723-BD94-476B0B529647}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,27 +12,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5CE717BE-99A9-47FC-853E-74193975AE07} = {6978CC60-2DB5-4E99-A4B7-F0C2A9A5CA72}
-		{446ABFFE-4097-4860-9F46-4CC54237CF76} = {6978CC60-2DB5-4E99-A4B7-F0C2A9A5CA72}
 		{2E1A29F5-1A15-4EC9-AD2E-5673A29746F7} = {6978CC60-2DB5-4E99-A4B7-F0C2A9A5CA72}
-		{EC551857-9769-4723-BD94-476B0B529647} = {6978CC60-2DB5-4E99-A4B7-F0C2A9A5CA72}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5CE717BE-99A9-47FC-853E-74193975AE07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CE717BE-99A9-47FC-853E-74193975AE07}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CE717BE-99A9-47FC-853E-74193975AE07}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CE717BE-99A9-47FC-853E-74193975AE07}.Release|Any CPU.Build.0 = Release|Any CPU
-		{446ABFFE-4097-4860-9F46-4CC54237CF76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{446ABFFE-4097-4860-9F46-4CC54237CF76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{446ABFFE-4097-4860-9F46-4CC54237CF76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{446ABFFE-4097-4860-9F46-4CC54237CF76}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E1A29F5-1A15-4EC9-AD2E-5673A29746F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E1A29F5-1A15-4EC9-AD2E-5673A29746F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E1A29F5-1A15-4EC9-AD2E-5673A29746F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E1A29F5-1A15-4EC9-AD2E-5673A29746F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC551857-9769-4723-BD94-476B0B529647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC551857-9769-4723-BD94-476B0B529647}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC551857-9769-4723-BD94-476B0B529647}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC551857-9769-4723-BD94-476B0B529647}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

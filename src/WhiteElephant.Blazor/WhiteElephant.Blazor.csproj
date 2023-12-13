@@ -7,11 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WhiteElephant.Application\WhiteElephant.Application.csproj" />
-      <ProjectReference Include="..\WhiteElephant.Infrastructure\WhiteElephant.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
     </ItemGroup>
 
