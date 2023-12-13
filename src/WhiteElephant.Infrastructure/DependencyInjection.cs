@@ -8,7 +8,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
-        services.AddSingleton<IPersonRepository, PersonRepository>();
+        services.AddScoped<IPersonRepository, PersonRepository>();
         
         return services;
     }

@@ -1,11 +1,7 @@
 ﻿@page "/"
-@using MediatR
-@using WhiteElephant.Application.Persons.AddPerson
 @using WhiteElephant.Application.Persons.DTOs
-@using WhiteElephant.Application.Persons.GetAllPersons
-@using WhiteElephant.Application.Persons.RemovePerson
-@inject ISender Mediator
-@inject IJSRuntime JS
+@using Blazored.LocalStorage
+@inject ILocalStorageService LocalStorage
 
 @rendermode InteractiveServer
 
@@ -41,24 +37,34 @@
     
     public string Name { get; set; } = string.Empty;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var dtos = await Mediator.Send(new GetAllPersonsQuery());
+        if (!firstRender)
+        {
+            return;
+        }
         
-        _persons = dtos.ToList();
+        if (!await LocalStorage.ContainKeyAsync("persons"))
+        {
+            await LocalStorage.SetItemAsync("persons", new List<PersonDto>());
+        }
 
-        await base.OnInitializedAsync();
+        _persons = await LocalStorage.GetItemAsync<List<PersonDto>>("persons");
+        
+        StateHasChanged();
+
+        await base.OnAfterRenderAsync(firstRender);
     }
 
     private async Task OnKeyDown(KeyboardEventArgs arg)
     {
         if (arg.Key == "Enter")
         {
-            var dto = new PersonDto(Guid.NewGuid(), Name);
+            var personToAdd = new PersonDto(Guid.NewGuid(), Name);
             
-            _persons.Add(dto);
+            _persons.Add(personToAdd);
             
-            await Mediator.Send(new AddPersonCommand(dto));
+            await LocalStorage.SetItemAsync("persons", _persons);
 
             Name = string.Empty;
         }
@@ -66,9 +72,16 @@
 
     private async Task OnDeleteAsync(Guid id)
     {
-        _persons.RemoveAll(x => x.Id == id);
+        var personToRemove = _persons.FirstOrDefault(x => x.Id == id);
+        
+        if (personToRemove is null)
+        {
+            return;
+        }
 
-        await Mediator.Send(new RemovePersonCommand(id));
+        _persons.Remove(personToRemove);
+        
+        await LocalStorage.SetItemAsync("persons", _persons);
     }
 
 }
