@@ -1,9 +1,10 @@
 using MediatR;
+using WhiteElephant.Application.Persons.DTOs;
 using WhiteElephant.Domain.Person;
 
 namespace WhiteElephant.Application.Persons.AddPerson;
 
-public record AddPersonCommand(string Name) : IRequest;
+public record AddPersonCommand(PersonDto person) : IRequest;
 
 public class AddPersonCommandHandler : IRequestHandler<AddPersonCommand>
 {
@@ -16,8 +17,7 @@ public class AddPersonCommandHandler : IRequestHandler<AddPersonCommand>
 
     public Task Handle(AddPersonCommand request, CancellationToken cancellationToken)
     {
-        var person = Person.Create(request.Name);
-        
+        var person = Person.Create(request.person.Id, request.person.Name);
         return _personRepository.AddAsync(person);
     }
 }

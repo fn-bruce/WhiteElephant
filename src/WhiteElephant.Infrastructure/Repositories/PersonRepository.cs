@@ -4,7 +4,12 @@ namespace WhiteElephant.Infrastructure.Repositories;
 
 public class PersonRepository : IPersonRepository
 {
-    private readonly List<Person> _people = new();
+    private readonly List<Person> _people = new()
+    {
+        Person.Create("Billy Bob"),
+        Person.Create("Sally Sue"),
+        Person.Create("Joe Bob")
+    };
     
     public Task<List<Person>> GetAllAsync()
     {

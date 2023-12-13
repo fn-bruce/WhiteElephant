@@ -18,6 +18,17 @@
           "ASPNETCORE_ENVIRONMENT": "Development"
         }
       },
+      "http-watch": {
+        "commandName": "Project",
+        "dotnetRunMessages": true,
+        "hotReloadEnabled": true,
+        "hotReloadProfile": "aspnetcore",
+        "launchBrowser": true,
+        "applicationUrl": "http://localhost:5174",
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        }
+      },
       "https": {
         "commandName": "Project",
         "dotnetRunMessages": true,

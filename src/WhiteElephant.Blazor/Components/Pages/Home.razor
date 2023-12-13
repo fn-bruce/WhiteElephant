@@ -1,7 +1,74 @@
 ﻿@page "/"
+@using MediatR
+@using WhiteElephant.Application.Persons.AddPerson
+@using WhiteElephant.Application.Persons.DTOs
+@using WhiteElephant.Application.Persons.GetAllPersons
+@using WhiteElephant.Application.Persons.RemovePerson
+@inject ISender Mediator
+@inject IJSRuntime JS
 
-<PageTitle>Home</PageTitle>
+@rendermode InteractiveServer
 
-<h1>Hello, world!</h1>
+<PageTitle>White Elephant</PageTitle>
 
-Welcome to your new app.
+<div class="container w-25">
+    <div class="row mb-3">
+        <div class="form-group">
+            <label class="mb-1">Add person:</label>
+            <input type="text" @bind-value="@Name" @bind-value:event="oninput" @onkeydown="@OnKeyDown" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row overflow-auto p-2" style="border: solid 1px black; height: 25vh;">
+        <div>
+            @foreach (var person in _persons)
+            {
+                <div class="container">
+                    <div class="row m-2">
+                        <p class="col m-auto">@person.Name</p>
+                        <button class="col" @onclick="() => OnDeleteAsync(person.Id)">X</button>
+                        
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private List<PersonDto> _persons = [];
+    
+    public string Name { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var dtos = await Mediator.Send(new GetAllPersonsQuery());
+        
+        _persons = dtos.ToList();
+
+        await base.OnInitializedAsync();
+    }
+
+    private async Task OnKeyDown(KeyboardEventArgs arg)
+    {
+        if (arg.Key == "Enter")
+        {
+            var dto = new PersonDto(Guid.NewGuid(), Name);
+            
+            _persons.Add(dto);
+            
+            await Mediator.Send(new AddPersonCommand(dto));
+
+            Name = string.Empty;
+        }
+    }
+
+    private async Task OnDeleteAsync(Guid id)
+    {
+        _persons.RemoveAll(x => x.Id == id);
+
+        await Mediator.Send(new RemovePersonCommand(id));
+    }
+
+}
