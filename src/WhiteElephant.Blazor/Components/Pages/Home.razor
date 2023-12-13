@@ -7,33 +7,56 @@
 
 <PageTitle>White Elephant</PageTitle>
 
-<div class="container w-25">
-    <div class="row mb-3">
-        <div class="form-group">
-            <label class="mb-1">Add person:</label>
-            <input type="text" @bind-value="@Name" @bind-value:event="oninput" @onkeydown="@OnKeyDown" class="form-control"/>
+@if (!_started)
+{
+    <div class="container w-25">
+        <div class="row mb-3">
+            <div class="form-group">
+                <label class="mb-1">Add person:</label>
+                <input type="text" @bind-value="@Name" @bind-value:event="oninput" @onkeydown="@OnKeyDown" class="form-control"/>
+            </div>
         </div>
-    </div>
 
-    <div class="row overflow-auto p-2" style="border: solid 1px black; height: 25vh;">
-        <div>
-            @foreach (var person in _persons)
-            {
-                <div class="container">
-                    <div class="row m-2">
-                        <p class="col m-auto">@person.Name</p>
-                        <button class="col" @onclick="() => OnDeleteAsync(person.Id)">X</button>
-                        
+        <div class="row overflow-auto p-2" style="border: solid 1px black; height: 25vh;">
+            <div>
+                @foreach (var person in _persons)
+                {
+                    <div class="container">
+                        <div class="row m-2">
+                            <p class="col m-auto">@person.Name</p>
+                            <button class="col" @onclick="() => OnDeleteAsync(person.Id)">X</button>
+                            
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <button style="height: 50px;" @onclick="OnStart">Start</button>
         </div>
     </div>
-</div>
+}
+else
+{
+    <div class="container w-25">
+        <div class="row">
+            <p class="col m-auto">Current person: @_currentPerson?.Name</p>
+        </div>
+        <div class="row">
+            
+            <button style="height: 50px;" @onclick="OnNext">Next</button>
+
+        </div>
+    </div>
+}
 
 @code {
 
     private List<PersonDto> _persons = [];
+    private List<PersonDto> _personsRandomized = [];
+    private PersonDto? _currentPerson;
+    private bool _started = false;
     
     public string Name { get; set; } = string.Empty;
 
@@ -82,6 +105,40 @@
         _persons.Remove(personToRemove);
         
         await LocalStorage.SetItemAsync("persons", _persons);
+    }
+
+    private void OnStart()
+    {
+        var rng = new Random();
+        
+        _personsRandomized = _persons.ToList();
+
+        var n = _personsRandomized.Count;
+        while (n > 1)
+        {
+            n--;
+            var k = rng.Next(n + 1);
+            (_personsRandomized[k], _personsRandomized[n]) = (_personsRandomized[n], _personsRandomized[k]);
+        }
+        
+        _currentPerson = _personsRandomized[0];
+        
+        _started = true;
+    }
+
+    private void OnNext()
+    {
+        var index = _personsRandomized.IndexOf(_currentPerson);
+        
+        if (index == _personsRandomized.Count - 1)
+        {
+            _currentPerson = null;
+            _started = false;
+        }
+        else
+        {
+            _currentPerson = _personsRandomized[index + 1];
+        }
     }
 
 }
