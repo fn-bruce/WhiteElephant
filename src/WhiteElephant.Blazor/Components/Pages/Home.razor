@@ -8,12 +8,16 @@
 <PageTitle>White Elephant</PageTitle>
 
 <div style="background: black;">
-    <img src="images/white-elephant.svg" alt="white-elephant"/>
+    <svg width="100" height="100" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M174.604 360.387C195.313 357.35 214.941 349.212 231.724 336.707C244.721 343.278 259.08 346.703 273.644 346.707C348.744 343.598 381.281 271.208 382.443 213.987C384.861 186.119 385.8 158.656 375.324 132.866C349.087 67.1228 271.047 41.6254 215.884 93.668C170.281 88.0455 113.432 98.3926 80.4444 130.946C28.7644 179.986 28.4444 266.546 35.0044 344.786C37.2444 371.826 40.8444 399.346 45.6444 426.466C48.8537 454.926 83.9227 470.446 106.044 451.985C110.932 448.279 114.72 443.314 117.003 437.621C119.285 431.929 119.977 425.722 119.004 419.666L111.644 353.906C131.695 361.57 153.413 363.805 174.604 360.387ZM145.244 256.307C145.244 253.124 146.509 250.072 148.759 247.821C151.009 245.571 154.062 244.307 157.244 244.307C160.427 244.307 163.479 245.571 165.73 247.821C167.98 250.072 169.244 253.124 169.244 256.307C169.244 259.489 167.98 262.542 165.729 264.792C163.479 267.043 160.427 268.307 157.244 268.307C154.061 268.307 151.009 267.043 148.759 264.792C146.508 262.542 145.244 259.489 145.244 256.307Z" fill="white"/>
+        <path d="M192.124 76.2271C198.364 76.2271 204.604 76.4671 210.604 77.0271C221.928 67.6623 234.82 60.3765 248.684 55.5071C230.56 48.9184 210.886 47.8726 192.166 52.5029C173.446 57.1331 156.527 67.23 143.564 81.5076C159.512 77.995 175.794 76.2244 192.124 76.2271Z" fill="white"/>
+        <path d="M460.604 196.787C445.484 163.907 422.604 143.027 393.404 135.747C394.444 139.027 395.324 142.307 396.124 145.827C400.614 168.728 401.371 192.204 398.364 215.347C396.444 239.507 394.604 262.387 381.084 288.707C368.331 316.558 346.224 339.061 318.604 352.307C305.383 358.649 290.986 362.166 276.331 362.634C261.675 363.102 247.083 360.512 233.484 355.027C212.533 368.369 188.52 376.135 163.724 377.587L182.524 431.427C186.246 442.385 194.097 451.458 204.405 456.717C214.714 461.976 226.668 463.006 237.724 459.587C258.924 454.947 271.164 432.787 274.044 412.708C274.316 410.914 275.227 409.278 276.608 408.102C277.99 406.926 279.75 406.289 281.564 406.308H344.924C346.682 406.303 348.39 406.893 349.77 407.983C351.15 409.072 352.121 410.596 352.524 412.308C353.122 422.807 356.77 432.903 363.023 441.359C369.276 449.814 377.861 456.261 387.724 459.908C482.592 485.032 498.341 271.292 460.604 196.787Z" fill="white"/>
+    </svg>
 </div>
 
 @if (!_started)
 {
-    <div class="container w-25">
+    <div class="container w-80">
         <div class="row mb-3">
             <div class="form-group">
                 <label class="mb-1">Add person:</label>
@@ -21,21 +25,19 @@
             </div>
         </div>
 
-        <div class="row overflow-auto p-2" style="border: solid 1px black; height: 25vh;">
+        <div class="row overflow-auto p-1" style="border: solid 1px black; height: 50vh;">
             <div>
                 @foreach (var person in _persons)
                 {
-                    <div class="container">
-                        <div class="row m-2">
-                            <p class="col m-auto">@person.Name</p>
-                            <button class="col" @onclick="() => OnDeleteAsync(person.Id)">X</button>
-                            
-                        </div>
+                    <div class="row m-1">
+                        <p class="col-1">
+                            <button @onclick="() => OnDeleteAsync(person.Id)">X</button>
+                        </p>
+                        <p class="col-11">@person.Name</p>
                     </div>
                 }
             </div>
         </div>
-        
         <div class="row mt-3">
             <button style="height: 50px;" @onclick="OnStart">Start</button>
         </div>
@@ -43,12 +45,16 @@
 }
 else
 {
-    <div class="container w-25">
+    <div class="container w-75">
         <div class="row">
-            <p class="col m-auto">Current person: @_currentPerson?.Name</p>
+            <p class="col m-auto p-2 d-flex justify-content-center">Current person:</p>
         </div>
         <div class="row">
-            
+            <p class="col m-auto p-2 d-flex justify-content-center">
+                <h1>@_currentPerson?.Name</h1>
+            </p>
+        </div>
+        <div class="row">
             <button style="height: 50px;" @onclick="OnNext">Next</button>
 
         </div>
@@ -56,12 +62,10 @@ else
 }
 
 @code {
-
     private List<Person> _persons = [];
     private List<Person> _personsRandomized = [];
     private Person? _currentPerson;
     private bool _started = false;
-    
     public string Name { get; set; } = string.Empty;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -70,16 +74,14 @@ else
         {
             return;
         }
-        
+
         if (!await LocalStorage.ContainKeyAsync("persons"))
         {
             await LocalStorage.SetItemAsync("persons", new List<Person>());
         }
 
         _persons = await LocalStorage.GetItemAsync<List<Person>>("persons");
-        
         StateHasChanged();
-
         await base.OnAfterRenderAsync(firstRender);
     }
 
@@ -87,36 +89,33 @@ else
     {
         if (arg.Key == "Enter")
         {
-            var personToAdd = new Person(Guid.NewGuid(), Name);
-            
-            _persons.Add(personToAdd);
-            
-            await LocalStorage.SetItemAsync("persons", _persons);
-
-            Name = string.Empty;
+            if (!string.IsNullOrEmpty(Name))
+            {
+                var personToAdd = new Person(Guid.NewGuid(), Name);
+                _persons.Add(personToAdd);
+                _persons.Reverse();
+                await LocalStorage.SetItemAsync("persons", _persons);
+                Name = string.Empty;
+            }
         }
     }
 
     private async Task OnDeleteAsync(Guid id)
     {
         var personToRemove = _persons.FirstOrDefault(x => x.Id == id);
-        
         if (personToRemove is null)
         {
             return;
         }
 
         _persons.Remove(personToRemove);
-        
         await LocalStorage.SetItemAsync("persons", _persons);
     }
 
     private void OnStart()
     {
         var rng = new Random();
-        
         _personsRandomized = _persons.ToList();
-
         var n = _personsRandomized.Count;
         while (n > 1)
         {
@@ -124,16 +123,14 @@ else
             var k = rng.Next(n + 1);
             (_personsRandomized[k], _personsRandomized[n]) = (_personsRandomized[n], _personsRandomized[k]);
         }
-        
+
         _currentPerson = _personsRandomized[0];
-        
         _started = true;
     }
 
     private void OnNext()
     {
         var index = _personsRandomized.IndexOf(_currentPerson);
-        
         if (index == _personsRandomized.Count - 1)
         {
             _currentPerson = null;
